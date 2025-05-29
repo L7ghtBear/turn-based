@@ -1,0 +1,182 @@
+[gd_scene load_steps=19 format=3 uid="uid://cf70saq71igqk"]
+
+[ext_resource type="Script" uid="uid://cwafh5hggxydg" path="res://Entities/survivor.gd" id="1_a8yv1"]
+[ext_resource type="Script" uid="uid://d1ewbojrf8iui" path="res://EntityComponents/health_component.gd" id="2_4jqnu"]
+[ext_resource type="Script" uid="uid://by6604wl5e1s0" path="res://EntityComponents/MoveTree/Conditions/chance_condition.gd" id="3_0phpd"]
+[ext_resource type="Script" uid="uid://dj3ooe6ynb8ru" path="res://EntityComponents/MoveTree/Conditions/has_status_condition.gd" id="3_1qv6i"]
+[ext_resource type="Texture2D" uid="uid://c2hd60fpil7e5" path="res://Assets/icon.svg" id="3_d07mr"]
+[ext_resource type="Script" uid="uid://b455504uxyrjt" path="res://EntityComponents/MoveTree/move_selector.gd" id="4_prd51"]
+[ext_resource type="Script" uid="uid://bmpmalcy68a1n" path="res://EntityComponents/MoveTree/Conditions/health_condition.gd" id="5_0emwa"]
+[ext_resource type="Script" uid="uid://bohl08u4e2hwa" path="res://EntityComponents/MoveTree/move_caller.gd" id="5_h7my4"]
+[ext_resource type="Script" uid="uid://la4jtb7nkfur" path="res://EntityComponents/MoveTree/Conditions/entity_change_condition.gd" id="7_pwim8"]
+[ext_resource type="Script" uid="uid://b8242kj6htw7n" path="res://EntityComponents/move_container.gd" id="8_hixr5"]
+[ext_resource type="Script" uid="uid://dthh7af5sphlq" path="res://Moves/EdenMoves/living_tree_move.gd" id="9_c40oa"]
+[ext_resource type="Script" uid="uid://cv7akdkjl1f7" path="res://Moves/EdenMoves/apple_toss_move.gd" id="10_ocfmp"]
+[ext_resource type="Script" uid="uid://wj21veyqo5du" path="res://Moves/EdenMoves/apple_barrage_move.gd" id="11_4jqnu"]
+[ext_resource type="Script" uid="uid://qfmas0oeakvi" path="res://Moves/EdenMoves/apple_backfire_move.gd" id="12_d07mr"]
+[ext_resource type="Script" uid="uid://cbvnncdicpmqr" path="res://Moves/EdenMoves/spit_venom_move.gd" id="13_a8yv1"]
+[ext_resource type="Script" uid="uid://2w81longrb6u" path="res://Moves/EdenMoves/snake_hater_move.gd" id="14_ocfmp"]
+[ext_resource type="Script" uid="uid://cgi4w63r7r7hb" path="res://EntityComponents/status_container.gd" id="17_a8yv1"]
+[ext_resource type="Script" uid="uid://b70apbx5go6f3" path="res://attack_handler.gd" id="18_prd51"]
+
+[node name="Eden" type="Node2D"]
+script = ExtResource("1_a8yv1")
+metadata/_custom_type_script = "uid://cwafh5hggxydg"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -41.0
+offset_top = -101.0
+offset_right = 46.0
+offset_bottom = -78.0
+text = "label here"
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_4jqnu")
+metadata/_custom_type_script = "uid://d1ewbojrf8iui"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_d07mr")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+
+[node name="MoveSelector" type="Node" parent="."]
+script = ExtResource("4_prd51")
+metadata/_custom_type_script = "uid://b455504uxyrjt"
+
+[node name="HasCurse" type="Node" parent="MoveSelector"]
+script = ExtResource("3_1qv6i")
+metadata/_custom_type_script = "uid://dj3ooe6ynb8ru"
+
+[node name="Chance75Percent" type="Node" parent="MoveSelector/HasCurse"]
+script = ExtResource("3_0phpd")
+percent_chance = 75
+metadata/_custom_type_script = "uid://by6604wl5e1s0"
+
+[node name="UseLivingTree" type="Node" parent="MoveSelector/HasCurse/Chance75Percent" node_paths=PackedStringArray("move")]
+script = ExtResource("5_h7my4")
+move = NodePath("../../../../MoveContainer/LivingTreeMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="LessEquals25PercentHealth" type="Node" parent="MoveSelector"]
+script = ExtResource("5_0emwa")
+operator = "Less Equal"
+health_value = 25
+health_type = "Percentage"
+metadata/_custom_type_script = "uid://bmpmalcy68a1n"
+
+[node name="Chance75Percent" type="Node" parent="MoveSelector/LessEquals25PercentHealth"]
+script = ExtResource("3_0phpd")
+percent_chance = 75
+metadata/_custom_type_script = "uid://by6604wl5e1s0"
+
+[node name="UseLivingTree" type="Node" parent="MoveSelector/LessEquals25PercentHealth/Chance75Percent" node_paths=PackedStringArray("move")]
+script = ExtResource("5_h7my4")
+move = NodePath("../../../../MoveContainer/LivingTreeMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="HasSnakeHater" type="Node" parent="MoveSelector"]
+script = ExtResource("3_1qv6i")
+statusID = 2
+metadata/_custom_type_script = "uid://dj3ooe6ynb8ru"
+
+[node name="UseAppleBarrage" type="Node" parent="MoveSelector/HasSnakeHater" node_paths=PackedStringArray("move")]
+script = ExtResource("5_h7my4")
+move = NodePath("../../../MoveContainer/AppleBarrageMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="Less100PercentHealth" type="Node" parent="MoveSelector"]
+script = ExtResource("5_0emwa")
+operator = "Less"
+health_value = 100
+health_type = "Percentage"
+metadata/_custom_type_script = "uid://bmpmalcy68a1n"
+
+[node name="Chance25Percent" type="Node" parent="MoveSelector/Less100PercentHealth"]
+script = ExtResource("3_0phpd")
+percent_chance = 25
+metadata/_custom_type_script = "uid://by6604wl5e1s0"
+
+[node name="UseSnakeHater" type="Node" parent="MoveSelector/Less100PercentHealth/Chance25Percent" node_paths=PackedStringArray("move")]
+script = ExtResource("5_h7my4")
+move = NodePath("../../../../MoveContainer/SnakeHaterMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="GreaterEqual1EnemyKilled" type="Node" parent="MoveSelector"]
+script = ExtResource("7_pwim8")
+team = "Enemies"
+operator = "Greater Equal"
+value = 1
+status = "Killed"
+metadata/_custom_type_script = "uid://la4jtb7nkfur"
+
+[node name="Chance25Percent" type="Node" parent="MoveSelector/GreaterEqual1EnemyKilled"]
+script = ExtResource("3_0phpd")
+percent_chance = 25
+metadata/_custom_type_script = "uid://by6604wl5e1s0"
+
+[node name="UseSpitVenom" type="Node" parent="MoveSelector/GreaterEqual1EnemyKilled/Chance25Percent" node_paths=PackedStringArray("move")]
+script = ExtResource("5_h7my4")
+move = NodePath("../../../../MoveContainer/SpitVenomMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="Chance75Percent" type="Node" parent="MoveSelector"]
+script = ExtResource("3_0phpd")
+percent_chance = 75
+metadata/_custom_type_script = "uid://by6604wl5e1s0"
+
+[node name="UseAppleToss" type="Node" parent="MoveSelector/Chance75Percent" node_paths=PackedStringArray("move")]
+script = ExtResource("5_h7my4")
+move = NodePath("../../../MoveContainer/AppleTossMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="UseAppleBackfire" type="Node" parent="MoveSelector" node_paths=PackedStringArray("move")]
+script = ExtResource("5_h7my4")
+move = NodePath("../../MoveContainer/AppleBackfireMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="MoveContainer" type="Node" parent="."]
+script = ExtResource("8_hixr5")
+metadata/_custom_type_script = "uid://b8242kj6htw7n"
+
+[node name="LivingTreeMove" type="Node" parent="MoveContainer"]
+script = ExtResource("9_c40oa")
+metadata/_custom_type_script = "uid://dthh7af5sphlq"
+
+[node name="AppleTossMove" type="Node" parent="MoveContainer"]
+script = ExtResource("10_ocfmp")
+metadata/_custom_type_script = "uid://cv7akdkjl1f7"
+
+[node name="AppleBarrageMove" type="Node" parent="MoveContainer"]
+script = ExtResource("11_4jqnu")
+metadata/_custom_type_script = "uid://wj21veyqo5du"
+
+[node name="AppleBackfireMove" type="Node" parent="MoveContainer"]
+script = ExtResource("12_d07mr")
+metadata/_custom_type_script = "uid://qfmas0oeakvi"
+
+[node name="SpitVenomMove" type="Node" parent="MoveContainer"]
+script = ExtResource("13_a8yv1")
+metadata/_custom_type_script = "uid://cbvnncdicpmqr"
+
+[node name="SnakeHaterMove" type="Node" parent="MoveContainer"]
+script = ExtResource("14_ocfmp")
+metadata/_custom_type_script = "uid://2w81longrb6u"
+
+[node name="Take10Damage" type="Button" parent="."]
+offset_left = 96.0
+offset_right = 104.0
+offset_bottom = 8.0
+text = "Take 10 Damage"
+
+[node name="StatusContainer" type="Node" parent="."]
+script = ExtResource("17_a8yv1")
+metadata/_custom_type_script = "uid://cgi4w63r7r7hb"
+
+[node name="AttackHandler" type="Node" parent="." node_paths=PackedStringArray("health_component", "status_container")]
+script = ExtResource("18_prd51")
+health_component = NodePath("../HealthComponent")
+status_container = NodePath("../StatusContainer")
+metadata/_custom_type_script = "uid://b70apbx5go6f3"
+
+[connection signal="button_down" from="Take10Damage" to="HealthComponent" method="_on_take_10_damage_button_down"]

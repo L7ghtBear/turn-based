@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=4 format=3 uid="uid://iyvdn4umhjed"]
+
+[ext_resource type="Script" uid="uid://dtk4qp7ke58vd" path="res://attribute.gd" id="1_86qbw"]
+[ext_resource type="Script" uid="uid://bl6k1nrh66qpy" path="res://Entities/enemy_data.gd" id="2_tjv27"]
+[ext_resource type="PackedScene" uid="uid://dv22i2hw5bta8" path="res://Entities/Enemies/Researcher/researcher.tscn" id="2_uefup"]
+
+[resource]
+script = ExtResource("2_tjv27")
+id = 0
+name = "Researcher"
+battle_scene = ExtResource("2_uefup")
+current_health = 70
+max_health = 70
+is_frontline = true
+attributes = Array[ExtResource("1_86qbw")]([])
+level = 0
+metadata/_custom_type_script = "uid://bl6k1nrh66qpy"

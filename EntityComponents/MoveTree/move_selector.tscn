@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwkuouldg1ybb"]
+
+[ext_resource type="Script" uid="uid://b455504uxyrjt" path="res://EntityComponents/MoveTree/move_selector.gd" id="1_pn3et"]
+
+[node name="MoveSelector" type="Node"]
+script = ExtResource("1_pn3et")
+metadata/_custom_type_script = "uid://b455504uxyrjt"

@@ -1,0 +1,28 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Turn Based"
+run/main_scene="uid://cph7vh04s1lqd"
+config/features=PackedStringArray("4.4", "Mobile")
+config/icon="res://Assets/icon.svg"
+
+[autoload]
+
+PartyManager="*res://Globals/party_manager.gd"
+SurvivorDatabase="*res://Globals/survivor_database.gd"
+StatusDatabase="*res://Globals/status_database.gd"
+EnemyDatabase="*res://Globals/enemy_database.gd"
+CombatBlackboard="*res://Globals/combat_blackboard.gd"
+
+[rendering]
+
+renderer/rendering_method="mobile"

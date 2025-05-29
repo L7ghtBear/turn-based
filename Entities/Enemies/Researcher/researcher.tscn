@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://dv22i2hw5bta8"]
+
+[ext_resource type="Script" uid="uid://kgxwfiqajo7v" path="res://Entities/enemy.gd" id="1_jd23j"]
+[ext_resource type="Script" uid="uid://d1ewbojrf8iui" path="res://EntityComponents/health_component.gd" id="2_ditye"]
+[ext_resource type="Texture2D" uid="uid://c2hd60fpil7e5" path="res://Assets/icon.svg" id="3_uf2qe"]
+[ext_resource type="Script" uid="uid://b455504uxyrjt" path="res://EntityComponents/MoveTree/move_selector.gd" id="4_yt1gn"]
+[ext_resource type="Script" uid="uid://b0usy2cpjd0me" path="res://EntityComponents/MoveTree/Conditions/turn_condition.gd" id="5_lejr7"]
+[ext_resource type="Script" uid="uid://b8242kj6htw7n" path="res://EntityComponents/move_container.gd" id="5_qfmir"]
+[ext_resource type="Script" uid="uid://cgi4w63r7r7hb" path="res://EntityComponents/status_container.gd" id="6_8g30m"]
+[ext_resource type="Script" uid="uid://bm5djaa0ogktn" path="res://Moves/ResearcherMoves/lab_accident_move.gd" id="6_lejr7"]
+[ext_resource type="Script" uid="uid://bohl08u4e2hwa" path="res://EntityComponents/MoveTree/move_caller.gd" id="6_rmxff"]
+[ext_resource type="Script" uid="uid://crr5s88ml6y7y" path="res://Moves/ResearcherMoves/research_move.gd" id="7_rmxff"]
+[ext_resource type="Script" uid="uid://b70apbx5go6f3" path="res://attack_handler.gd" id="11_6kd43"]
+
+[node name="Researcher" type="Node2D"]
+script = ExtResource("1_jd23j")
+metadata/_custom_type_script = "uid://kgxwfiqajo7v"
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_ditye")
+metadata/_custom_type_script = "uid://d1ewbojrf8iui"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 1, 1)
+texture = ExtResource("3_uf2qe")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+
+[node name="MoveSelector" type="Node" parent="."]
+script = ExtResource("4_yt1gn")
+metadata/_custom_type_script = "uid://b455504uxyrjt"
+
+[node name="OddTurn" type="Node" parent="MoveSelector"]
+script = ExtResource("5_lejr7")
+type_to_use = "Category"
+metadata/_custom_type_script = "uid://b0usy2cpjd0me"
+
+[node name="UseLabAccident" type="Node" parent="MoveSelector/OddTurn" node_paths=PackedStringArray("move")]
+script = ExtResource("6_rmxff")
+move = NodePath("../../../MoveContainer/LabAccidentMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="EvenTurn" type="Node" parent="MoveSelector"]
+script = ExtResource("5_lejr7")
+type_to_use = "Category"
+category_operator = "Even"
+metadata/_custom_type_script = "uid://b0usy2cpjd0me"
+
+[node name="UseResearch" type="Node" parent="MoveSelector/EvenTurn" node_paths=PackedStringArray("move")]
+script = ExtResource("6_rmxff")
+move = NodePath("../../../MoveContainer/ResearchMove")
+metadata/_custom_type_script = "uid://bohl08u4e2hwa"
+
+[node name="MoveContainer" type="Node" parent="."]
+script = ExtResource("5_qfmir")
+metadata/_custom_type_script = "uid://b8242kj6htw7n"
+
+[node name="LabAccidentMove" type="Node" parent="MoveContainer"]
+script = ExtResource("6_lejr7")
+metadata/_custom_type_script = "uid://bm5djaa0ogktn"
+
+[node name="ResearchMove" type="Node" parent="MoveContainer"]
+script = ExtResource("7_rmxff")
+metadata/_custom_type_script = "uid://crr5s88ml6y7y"
+
+[node name="StatusContainer" type="Node" parent="."]
+script = ExtResource("6_8g30m")
+metadata/_custom_type_script = "uid://cgi4w63r7r7hb"
+
+[node name="Label" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -88.0
+offset_right = 42.0
+offset_bottom = -65.0
+text = "label here "
+
+[node name="AttackHandler" type="Node" parent="." node_paths=PackedStringArray("health_component", "status_container")]
+script = ExtResource("11_6kd43")
+health_component = NodePath("../HealthComponent")
+status_container = NodePath("../StatusContainer")
+metadata/_custom_type_script = "uid://b70apbx5go6f3"

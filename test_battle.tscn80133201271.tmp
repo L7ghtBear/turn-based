@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cph7vh04s1lqd"]
+
+[ext_resource type="Script" uid="uid://bdkcsj23h84ei" path="res://Combat/combat_manager.gd" id="1_1dg5m"]
+[ext_resource type="Script" uid="uid://yh5p1uvvtt7t" path="res://Combat/turn_manager.gd" id="2_u67t4"]
+[ext_resource type="Script" uid="uid://bjbjk44kmlcnk" path="res://Combat/entity_factory.gd" id="2_wwoy5"]
+[ext_resource type="Script" uid="uid://v1ar61l8gcg6" path="res://Combat/survivor_container.gd" id="3_d1u53"]
+
+[node name="TestBattle" type="Node2D"]
+
+[node name="CombatManager" type="Node2D" parent="."]
+script = ExtResource("1_1dg5m")
+temp_allies = Array[Object]([null])
+metadata/_custom_type_script = "uid://bdkcsj23h84ei"
+
+[node name="TurnManager" type="Node2D" parent="CombatManager"]
+script = ExtResource("2_u67t4")
+metadata/_custom_type_script = "uid://yh5p1uvvtt7t"
+
+[node name="EntityFactory" type="Node2D" parent="CombatManager"]
+script = ExtResource("2_wwoy5")
+metadata/_custom_type_script = "uid://bjbjk44kmlcnk"
+
+[node name="SurvivorContainer" type="Node2D" parent="CombatManager"]
+script = ExtResource("3_d1u53")
+metadata/_custom_type_script = "uid://v1ar61l8gcg6"

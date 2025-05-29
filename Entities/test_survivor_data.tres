@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SurvivorData" load_steps=4 format=3 uid="uid://c8qap106ig3e4"]
+
+[ext_resource type="Script" uid="uid://dtk4qp7ke58vd" path="res://attribute.gd" id="1_3joqw"]
+[ext_resource type="Script" uid="uid://cx2teq0gnkomg" path="res://Entities/survivor_data.gd" id="2_8eoug"]
+[ext_resource type="PackedScene" uid="uid://cf70saq71igqk" path="res://Entities/Survivors/Eden/eden.tscn" id="2_gynjh"]
+
+[resource]
+script = ExtResource("2_8eoug")
+id = 0
+name = "Eden"
+battle_scene = ExtResource("2_gynjh")
+current_health = 80
+max_health = 80
+attributes = Array[ExtResource("1_3joqw")]([])
+level = 0
+front_line = false
+metadata/_custom_type_script = "uid://cx2teq0gnkomg"
